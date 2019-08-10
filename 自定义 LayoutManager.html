@@ -1,0 +1,43 @@
+在 scrollVerticallyBy 中返回 dy 表示在处理多少滑动
+<p>
+ChildHelper
+
+这个方法返回一个 Bucket 相关联的 offset
+比如此时的 Bucket 为如下结构，长度改 64 为 4
+    0 0 1 1
+    1 1 0 0
+
+方法中的 limit 我们假定为无限大
+index 取值为 2
+
+removedBefore: 2
+
+想象一条数轴出来
+那么 index 和 offset 在数轴上的 2 那个点上
+diff = index - (offset - removedBefore)
+表示 offset 指针向左滑动到 0
+diff 为差距
+后面 offset += diff
+在上面的条件 diff 中，offset 不断增长来向 index 逼近
+offset 增加 offset 是很合理的值，因为如果 removeBefore 如果不增加的话
+马上条件就达到了
+达到条件后，一步一步再增长 offset，在 Bucket 往上是 1 的情况下，得到那个
+下一个是 0 但本次为 1 的那个位置，返回
+<hr/>
+数轴：0 1 2 3 4 5 6 7 8 9 10
+<hr/>
+这个方法的效果就是在返回值 offset 之前 0 的个数是等于入参 index 的，然后在 offset 当前若是 0，则返回；非 0，则前移至最近的 0。
+
+通俗来说就是空出 index 个 0，并在下一个 0 进行操作。
+
+private int getOffset(int index)
+</p>
+
+
+
+<h1>ViewHolder</h1>
+ViewHolder 的 flag
+FLAG_IGNORE:                        1左移7
+FLAG_TMP_DETACHED:      1右移8
+<hr />
+讲 LinearLayoutManager 比较好的文章 https://juejin.im/post/5c10ad715188253141435f4a

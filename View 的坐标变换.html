@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <title></title>
+
+  <style type="text/css">
+    @font-face {
+      font-family: myFirstFont;
+      src: url('HanyiSentyFlorCalligraphy.ttf');
+    }
+
+    body {
+    font-size: 30px;
+      font-family: myFirstFont;
+    }
+
+    .row {
+      display: flex;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      min-height: 40px;
+    }
+    
+  </style>
+
+
+</head>
+
+<body>
+dispatchTouchEvent --> isTransformedTouchPointInView --> transformPointToViewLocal --> child.getInverseMatrix().mapPoints(point);
+
+isTransformedTouchPointInView 判断触摸点的坐标是否在矩阵变换后的 View 内
+</body>
+
+</html>
+
