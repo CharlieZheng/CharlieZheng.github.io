@@ -1,2 +1,38 @@
-<h1>AdapterHelper
-</h1>
+
+
+mAttachedScrap
+mChangedScrap
+mCachedViews
+mCachedViews 中的 ViewHolder 怎么回收呢？看 recycleCachedViewAt 方法。其中把 ViewHolder 一个一个放入到 RecycledViewPool 的 map 中，然后再从 mCachedViews 移除。
+
+
+
+<h1>Recycler</h1>
+<p>
+    mCachedViews 的大小由两个变量决定。mCachedViews.size() == mRequestedCacheMax + mLayout.mPrefetchMaxCountObserved。
+</p>
+<h5>clear</h5>
+<p>
+    清空 mAttachedScrap 和 mCachedViews。并把 mCachedViews 中的 ViewHolder 还原并按 itemType 塞进 RecycledViewPool 里。
+</p>
+<h1>RecycledViewPool</h1>
+<p>RecycledViewPool 里面就是一个 map，以 itemType 为 key，value 是 ViewHolder 数组。putRecycledView 方法就是回收 ViewHolder 用的，根据 itemType 回收到对应的数组中。当数组满了就不回收了，什么都不做直接 return。回收前会对 ViewHolder 进行一次初始化，即调用 resetInternal 方法。</p>
+<b>addViewHolderToRecycledViewPool</b>
+<p>清空 ViewHolder 的 FLAG_SET_A11Y_ITEM_DELEGATE 标识位，值为 0001-0000-0000-0000-0000。</p>
+<b>clearNestedRecyclerViewIfNotNested</b>
+<p>这个方法决定要不要把 ViewHolder 的 mNestedRecyclerView 这个变量置空。如果这个变量就是 itemView 或者是 itemView 的一部分则不置空。如果是套在 itemView 外面或者两者没祖孙父子关系则置空。</p>
+
+<h1>ViewInfoStore</h1>
+<h5>removeViewHolder</h5>
+<p>从 mOldChangedHolders 和 mLayoutHolderMap 移除指定 ViewHolder。mLayoutHolderMap 移除 ViewHolder 的同时把对应的 InfoRecord 从它的静态变量 sPool 中清理。</p>
+
+<h1>UpdateOp</h1>
+<p>
+    ADD             0001
+    REMOVE          0010
+    UPDATE          0100
+    MOVE            1000
+    它的 equals 方法比较特别。两个 UpdateOp 如果都是 MOVE，而且 itemCount 和 positionStart 仅仅相差 1，且刚好第一个 UpdateOp 的 itemCount == 第二个 UpdateOp 的 positionStart、positionStart == 第二个 UpdateOp 的 itemCount，则也是相等的。
+</p>
+<b>updatePositionWithPostponed</b>
+
