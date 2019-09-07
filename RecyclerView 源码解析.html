@@ -36,3 +36,10 @@ mCachedViews 中的 ViewHolder 怎么回收呢？看 recycleCachedViewAt 方法�
 </p>
 <b>updatePositionWithPostponed</b>
 
+<h1>ChildHelper</h1>
+mBucket 变量中保存的是被置为 hide 状态的 View。
+mBucket 里面存的东西的格式如下：
+```
+100000000100000001000000100000100001000100101
+```
+有点等差数列的意思。

@@ -1,0 +1,32 @@
+ViewMatchers
+ViewActions
+ViewAssertions
+
+两种方式使用 Espresso
+
+
+<h2>法一：注解的方式</h2>
+@RunWith(AndroidJUnit4.class)
+@Rule
+public ActivityTestRule<SignAct> activityRule = new ActivityTestRule<>(SignAct.class);
+    @Before
+    public void initValidString() {
+        stringToBeTyped = "charlie.zheng@patpat.com";
+    }
+@Test 注解修饰待测试方法
+<h2>法二：继承的方式</h2>
+
+extends ActivityInstrumentationTestCase2<ActivityName>
+        @Override
+        public void setUp() throws Exception {
+            super.setUp();
+            getActivity();
+        }
+
+待测试的方法，其名以 test 开头。
+
+两种方法都需要 @LargeTest 注解测试类。
+
+运行测试前需要先 Clean Project
+
+<h1>如何判断打开</h1>
